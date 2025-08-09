@@ -1,20 +1,24 @@
 import requests
 
 
-url_template = 'https://wttr.in/{}?lang=ru&MqnT'
+payload = {
+    'lang': 'ru',
+    'M': '',
+    'q': '',
+    'n': '',
+    'T': ''
+}
 
-url_london = url_template.format('Лондон')
-response_london = requests.get(url_london)
-response_london.raise_for_status()
+cities = [
+    'Лондон',
+    'Шереметьево',
+    'Череповец'
+]
 
-url2_sheremethvo = url_template.format('Шереметьево')
-response_sheremethvo = requests.get(url2_sheremethvo)
-response_sheremethvo.raise_for_status()
+url_template = 'https://wttr.in/{}'
 
-url_cherepovec = url_template.format('Череповец')
-response_cherepovec = requests.get(url_cherepovec)
-response_cherepovec.raise_for_status()
-
-print(response_london.text)
-print(response_sheremethvo.text)
-print(response_cherepovec.text)
+for city in cities:
+    url = url_template.format(city)
+    response = requests.get(url, params=payload)
+    response.raise_for_status()
+    print(response.text)
